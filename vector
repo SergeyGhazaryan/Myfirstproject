@@ -1,0 +1,115 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+class Shape
+{
+public:
+  virtual float area() = 0;
+  virtual void print() = 0;
+  virtual void printArea() = 0;
+};
+class Rectangle : public Shape
+{
+protected:
+    int height;
+    int width;
+public:
+    Rectangle(int height, int width) : height(height), width(width) {}
+    float area()
+    {
+      return height * width;
+    }
+    void print()
+    {
+      cout << "Your image:" << endl;
+      for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
+          cout << "* ";
+        }
+        cout << endl;
+      }
+    }
+    void printArea()
+    {
+      cout << "The area of the rectangle is equal: " << area() << endl;
+    }
+};
+class Square : public Rectangle
+{
+public:
+  Square(int side) : Rectangle(side, side) {}
+  void printArea()
+  {
+    cout << "The area of the square is equal: " << area() << endl;
+  }
+};
+class Triangle : public Shape
+{
+protected:
+  int side;
+public:
+  Triangle(int side) : side(side) {}
+  float area()
+  {
+    return (float)(side * side) / 2;
+  }
+  void print()
+  {
+    cout << "Your image:" << endl;
+    for (int i = 0; i < side; i++) {
+      for (int j = 0; j < i + 1; j++) {
+        cout << "* ";
+      }
+        cout << endl;
+    }
+  }
+  void printArea()
+    {
+      cout << "The area of the triangle is equal: " << area() << endl;
+    }
+};
+int main()
+{
+  vector<Shape*> arr;
+  int form = 0;
+  int index = 0;
+  cout << "0 - Rectangle.\n1 - Square.\n2 - Triangle." << endl;
+  while (form != -1)
+  {
+    cout << "Select the forms and dimensions: ";
+    cin >> form;
+    Shape* shape = nullptr;
+    if (form == 0)
+    {
+      int height = 0;
+      int widht = 0;
+      cin >> height >> widht;
+      shape = new Rectangle(height, widht);
+    }
+    else if (form == 1)
+    {
+      int width = 0;
+      cin >> width;
+      shape = new Square(width);
+    }
+    else if (form == 2)
+    {
+      int width = 0;
+      cin >> width;
+      shape = new Triangle(width);
+    }
+    else 
+    {
+      cout << "No such type" << endl;
+      continue;
+    }
+      arr.push_back(shape);
+    }
+    for (int i = 0; i < arr.size(); i++)
+    {
+      arr[i]->print();
+      arr[i]->printArea();
+    }
+  cout << "Good luck!" << endl;
+  return 0;
+}
